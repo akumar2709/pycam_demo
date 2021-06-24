@@ -8,11 +8,11 @@ with open("coco.names", "r") as f:
 layer_names = net.getLayerNames()
 output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 colors = np.random.uniform(0, 255, size=(len(classes), 3))
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture("trial.mp4")
 
 
 # Loading frames
-while(True):
+while(cap.isOpened()):
     ret,frame = cap.read()
     frame = cv2.resize(frame, None, fx=0.4, fy=0.4)
     height, width, channels = frame.shape
@@ -50,7 +50,7 @@ while(True):
         if i in indexes:
             x, y, w, h = boxes[i]
             label = str(classes[class_ids[i]])
-            color = colors[i]
+            color = colors[1]
             cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)
             cv2.putText(frame, label, (x, y + 30), font, 3, color, 3)
     cv2.imshow("Detection", frame)
